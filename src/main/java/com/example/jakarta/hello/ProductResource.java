@@ -19,4 +19,14 @@ public class ProductResource {
         }
         return Response.status(Response.Status.ACCEPTED).entity(product).build();
     }
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+
+    @Path("/search")
+    public  Response getProduct(@QueryParam("name") String name){
+        Product product;
+        product =  productManager.searchProduct(name);
+        if(product==null)return  Response.status(Response.Status.BAD_REQUEST).build();
+        return Response.status(Response.Status.ACCEPTED).entity(product).build();
+    }
 }

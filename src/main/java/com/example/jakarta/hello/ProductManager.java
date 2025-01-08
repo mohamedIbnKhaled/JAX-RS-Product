@@ -10,10 +10,7 @@ public class ProductManager {
 
 
     private ProductManager(){
-
     }
-
-
 
     public static ProductManager getInstance(){
         if (single_instance==null){
