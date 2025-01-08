@@ -4,10 +4,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProductManager {
-
+    private static ProductManager single_instance;
 
     private final List<Product> productList = new ArrayList<>();
 
+
+    private ProductManager(){
+
+    }
+
+
+
+    public static ProductManager getInstance(){
+        if (single_instance==null){
+            single_instance = new ProductManager();
+        }
+        return single_instance;
+    }
     public Product searchProduct(String name){
         return productList.stream()
                 .filter(p -> p.getName().equalsIgnoreCase(name))

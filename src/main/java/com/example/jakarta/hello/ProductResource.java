@@ -1,22 +1,22 @@
 package com.example.jakarta.hello;
 
-import jakarta.ws.rs.Consumes;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
-
-import java.util.Arrays;
-import java.util.List;
+import jakarta.ws.rs.core.Response;
 
 @Path("/product")
 public class ProductResource {
-    @GET
+    ProductManager productManager = ProductManager.getInstance();
+    @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public List<Product> getProduct(){
-    return Arrays.asList(
-            new Product("phone",150),
-            new Product("tv",43));
-   }
+    @Path("/add")
+    public Response addProduct(Product product){
+        try {
+            productManager.addProduct(product);
+        }catch (Exception e){
+            return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
+        }
+        return Response.status(Response.Status.ACCEPTED).entity(product).build();
+    }
 }
